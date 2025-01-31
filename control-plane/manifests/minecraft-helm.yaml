@@ -20,8 +20,11 @@ minecraftServer:
   spigetResources: [28140,34315]
   # allowed players' names comma separated, leave blank to allow any players
   whitelist:
+  difficulty: normal
   # comma separated admin players' names
-  ops: "Berkenen"
+  ops: |
+    Berkenen
+    Kolton_
   # always set game mode when a player connects
   forcegameMode: true
   # choose a seed for the starting world
@@ -33,7 +36,7 @@ minecraftServer:
   # message in the launcher
   motd: "Welcome to Minecraft on Kubernetes"
   # player vs player enabled
-  pvp: false
+  pvp: true
   # REQUIRED this means you get nodePort exposed on all nodes and will get
   # directed to the correct node if you connect to any
   serviceType: NodePort
@@ -44,7 +47,7 @@ minecraftServer:
   # how far from the player are chunks rendered on the server
   # 10 is default, larger is nice on high spec hardware
   # I believe 25 is the client max so larger is wasted
-  viewDistance: 25
+  viewDistance: 20
   # memory to allocate to the jvm - if you change this also change the K8s resource request
   memory: 8g
 
@@ -83,6 +86,13 @@ extraEnv:
   # WARNING: setting this to true deletes your previous world data
   FORCE_WORLD_COPY: false
 
+  # Env for utilizing Aikar optimizations
+  USE_AIKAR_FLAGS: true
+
+  SIMULATION_DISTANCE: 10
+
+  EXISTING_OPS_FILE: SYNCHRONIZE
+
 # required to save the world in persistent local-path storage (k3s default Storage Class)
 # by default this goes in /var/lib/rancher/k3s/storage on the executing node.
 # NOTE this ties the deployment to the first node it spins up on,
@@ -101,10 +111,10 @@ persistence:
 # at startup time
 resources:
   requests:
-    memory: 8Gi
-    cpu: 4
+    memory: 4Gi
+    cpu: 3
   limits:
-    memory: 6Gi
+    memory: 12Gi
     cpu: 10
 
 # UNCOMMENT to choose a single node to run on
