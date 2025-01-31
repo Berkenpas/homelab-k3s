@@ -1,0 +1,29 @@
+# values.yaml
+replicaCount: 1
+
+ollama:
+  image: ollama/ollama:latest
+  imagePullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: "2"
+      memory: "4Gi"
+  pvc:
+    size: 35Gi
+
+openwebui:
+  image: ghcr.io/open-webui/open-webui:main
+  resources:
+    limits:
+      cpu: "2"
+      memory: "4Gi"
+  pvc:
+    size: 15Gi
+
+domain: ai.berkenpas.dev
+
+certificate:
+  email: berkenpasw@gmail.com
+  issuerName: letsencrypt
+  secretName: ai-berkenpas-dev-tls
+

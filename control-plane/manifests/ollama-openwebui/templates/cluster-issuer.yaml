@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: {{ .Values.certificate.issuerName | default "letsencrypt" }}
+spec:
+  acme:
+    # The public Let’s Encrypt endpoint
+    server: https://acme-v02.api.letsencrypt.org/directory
+    # Use the email from values.yaml (must be valid for Let’s Encrypt)
+    email: {{ .Values.certificate.email | quote }}
+    # Name of the secret that will store your private key
+    privateKeySecretRef:
+      name: {{ .Values.certificate.secretName | default "letsencrypt" }}
+    solvers:
+      - http01:
+          ingress:
+            class: nginx
+
